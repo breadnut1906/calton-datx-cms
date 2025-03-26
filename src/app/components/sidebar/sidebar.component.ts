@@ -2,16 +2,22 @@ import { Component, inject, signal } from '@angular/core';
 import { DrawerMenu } from '../../core/interfaces/drawer-menu';
 import { Router } from '@angular/router';
 import { PrimengUiModule } from '../../core/modules/primeng-ui/primeng-ui.module';
+import { UtilsService } from '../../core/services/utils.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-sidebar',
   imports: [ PrimengUiModule ],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrl: './sidebar.component.scss',
+  providers: [ MessageService, ConfirmationService ]
 })
 export class SidebarComponent {
 
   router = inject(Router);
+  utils = inject(UtilsService);
+  
+  confirmation = inject(ConfirmationService);
   menuItems = signal<DrawerMenu[]>([]);
 
   ngOnInit() {    
@@ -52,6 +58,26 @@ export class SidebarComponent {
     this.menuItems.set(updatedItems);
     
     if (menuItem.routerLink && !menuItem.items) this.onClickGotoPage(menuItem)
+  }
+
+  onClickLogout(event: Event) {
+    this.utils.drawerVisible.set(false);
+    this.confirmation.confirm({
+      target: event.target as EventTarget,
+      message: 'Are you sure you want to log out?',
+      closable: true,
+      closeOnEscape: true,
+      header: 'Logout Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true,
+      },
+      accept: () => {
+        // this.auth.onLogout();
+      },
+    })
   }
 
   onClickGotoPage(subMenu: any) {

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ComponentsModule } from '../core/modules/components/components.module';
+import { UtilsService } from '../core/services/utils.service';
 
 @Component({
   selector: 'app-main',
@@ -10,4 +11,5 @@ import { ComponentsModule } from '../core/modules/components/components.module';
 })
 export class MainComponent {
 
+  utils = inject(UtilsService);
 }

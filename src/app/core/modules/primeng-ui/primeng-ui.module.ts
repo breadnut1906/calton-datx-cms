@@ -6,6 +6,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { MenuModule } from 'primeng/menu';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DrawerModule } from 'primeng/drawer';
 
 const PRIMENGMODULES = [
   CommonModule,
@@ -15,6 +17,8 @@ const PRIMENGMODULES = [
   AvatarGroupModule,
   MenuModule,
   ConfirmPopupModule,
+  ConfirmDialogModule,
+  DrawerModule,
 ]
 
 @NgModule({

@@ -3,7 +3,7 @@
         @for (menu of menuItems(); track $index) {
             <li 
                 (click)="onToggleMenu(menu, $event)"
-                class="relative px-4 py-3 list-none hover:bg-blue-400 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer"
+                class="relative px-4 py-3 list-none hover:bg-indigo-800 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer"
             >
                 <i style="font-size: 1.5rem;" class="mb-2 text-white" [class]="menu.icon"></i>
                 <p class="text-white !select-none">{{ menu.label }}</p>
@@ -16,14 +16,53 @@
             </li>
         }
         <div class="absolute bottom-0 start-0 w-full flex flex-col gap-3">
-            <li class="px-4 py-3 list-none hover:bg-blue-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
+            <li class="px-4 py-3 list-none hover:bg-indigo-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
                 <i style="font-size: 1.5rem;" class="mb-2" class="pi pi-info-circle"></i>
                 <p class="!select-none">About</p>
             </li>
-            <li class="px-4 py-3 list-none hover:bg-blue-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
+            <li class="px-4 py-3 list-none hover:bg-indigo-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
                 <i style="font-size: 1.5rem;" class="mb-2" class="pi pi-sign-out"></i>
                 <p class="!select-none">Logout</p>
             </li>
         </div>
     </div>
 </div>
+
+<p-drawer [(visible)]="utils.drawerVisible" styleClass="!h-auto" position="bottom">
+    <ng-template #header>Side Menus</ng-template>
+    <ul class="flex flex-col gap-3">
+        @for (menu of menuItems(); track $index) {
+            <li 
+                (click)="onToggleMenu(menu, $event)"
+                class="relative px-4 py-3 list-none hover:bg-gray-100 flex flex-row justify-between items-center w-full hover:rounded-md cursor-pointer"
+            >
+                <div class="flex flex-row gap-2">
+                    <i style="font-size: 1.5rem;" class="mb-2" [class]="menu.icon"></i>
+                    <p>{{ menu.label }}</p>
+                </div>
+
+                @if (menu.items) { <i class="pi" [ngClass]="{ 'pi-chevron-up': menu.expanded, 'pi-chevron-down': !menu.expanded }"></i> }
+            </li>
+
+            @if (menu.items && menu.expanded) {
+                <ul class="ml-[3rem]">
+                    @for (subMenu of menu.items; track $index) {
+                        <li (click)="onClickGotoPage(subMenu)" class="relative px-4 py-3 list-none hover:bg-gray-100 flex flex-row w-full hover:rounded-md cursor-pointer">
+                            <p>{{ subMenu.label }}</p>
+                        </li>
+                    }
+                </ul>
+            }
+        }
+        <li class="px-4 py-3 list-none hover:bg-gray-100 flex flex-row gap-2 w-full hover:rounded-md cursor-pointer">
+            <i style="font-size: 1.5rem;" class="mb-2" class="pi pi-info-circle"></i>
+            <p class="!select-none">About</p>
+        </li>
+        <li (click)="onClickLogout($event)" class="px-4 py-3 list-none hover:bg-gray-100 flex flex-row gap-2 w-full hover:rounded-md cursor-pointer">
+            <i style="font-size: 1.5rem;" class="mb-2" class="pi pi-sign-out"></i>
+            <p class="!select-none">Logout</p>
+        </li>
+    </ul>
+</p-drawer>
+
+<p-confirmdialog />
