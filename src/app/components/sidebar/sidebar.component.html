@@ -1,1 +1,29 @@
-<p>sidebar works!</p>
+<div class="fixed sidebar-container hidden md:block w-[7rem] h-full bg-gray-800 z-50">
+    <div class="relative flex flex-col gap-3 h-full">
+        @for (menu of menuItems(); track $index) {
+            <li 
+                (click)="onToggleMenu(menu, $event)"
+                class="relative px-4 py-3 list-none hover:bg-blue-400 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer"
+            >
+                <i style="font-size: 1.5rem;" class="mb-2 text-white" [class]="menu.icon"></i>
+                <p class="text-white !select-none">{{ menu.label }}</p>
+
+                @if (menu.items && menu.expanded) {
+                    <div class="absolute left-full top-0 bg-white rounded-md shadow-md">
+                        <p-menu #subMenu [model]="menu.items" appendTo="button" />
+                    </div>
+                }
+            </li>
+        }
+        <div class="absolute bottom-0 start-0 w-full flex flex-col gap-3">
+            <li class="px-4 py-3 list-none hover:bg-blue-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
+                <i style="font-size: 1.5rem;" class="mb-2" class="pi pi-info-circle"></i>
+                <p class="!select-none">About</p>
+            </li>
+            <li class="px-4 py-3 list-none hover:bg-blue-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
+                <i style="font-size: 1.5rem;" class="mb-2" class="pi pi-sign-out"></i>
+                <p class="!select-none">Logout</p>
+            </li>
+        </div>
+    </div>
+</div>
