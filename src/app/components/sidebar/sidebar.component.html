@@ -6,7 +6,7 @@
                 class="relative px-4 py-3 list-none hover:bg-indigo-800 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer"
             >
                 <i style="font-size: 1.5rem;" class="mb-2 text-white" [class]="menu.icon"></i>
-                <p class="text-white !select-none">{{ menu.label }}</p>
+                <p class="text-sm text-white !select-none">{{ menu.label }}</p>
 
                 @if (menu.items && menu.expanded) {
                     <div class="absolute left-full top-0 bg-white rounded-md shadow-md">
@@ -18,11 +18,11 @@
         <div class="absolute bottom-0 start-0 w-full flex flex-col gap-3">
             <li class="px-4 py-3 list-none hover:bg-indigo-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
                 <i style="font-size: 1.5rem;" class="mb-2" class="pi pi-info-circle"></i>
-                <p class="!select-none">About</p>
+                <p class="text-sm !select-none">About</p>
             </li>
-            <li class="px-4 py-3 list-none hover:bg-indigo-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
+            <li (click)="onClickLogout($event)" class="px-4 py-3 list-none hover:bg-indigo-600 flex flex-col items-center justify-center w-full hover:rounded-md cursor-pointer text-white">
                 <i style="font-size: 1.5rem;" class="mb-2" class="pi pi-sign-out"></i>
-                <p class="!select-none">Logout</p>
+                <p class="text-sm !select-none">Logout</p>
             </li>
         </div>
     </div>
@@ -45,13 +45,26 @@
             </li>
 
             @if (menu.items && menu.expanded) {
-                <ul class="ml-[3rem]">
+                <p-accordion value="0" class="ml-[3rem]">
                     @for (subMenu of menu.items; track $index) {
-                        <li (click)="onClickGotoPage(subMenu)" class="relative px-4 py-3 list-none hover:bg-gray-100 flex flex-row w-full hover:rounded-md cursor-pointer">
-                            <p>{{ subMenu.label }}</p>
-                        </li>
+                        @if (subMenu.items) {
+                            <p-accordion-panel [value]="$index">
+                                <p-accordion-header>{{ subMenu.label }}</p-accordion-header>
+                                <p-accordion-content>
+                                    @for (child of subMenu.items; track $index) {
+                                        <li (click)="onClickGotoPage(child)" class="relative px-4 py-3 list-none hover:bg-gray-100 flex flex-row w-full hover:rounded-md cursor-pointer">
+                                            <p>{{ child.label }}</p>
+                                        </li>
+                                    }
+                                </p-accordion-content>
+                            </p-accordion-panel>
+                        } @else {
+                            <li (click)="onClickGotoPage(subMenu)" class="relative px-4 py-3 list-none hover:bg-gray-100 flex flex-row w-full hover:rounded-md cursor-pointer">
+                                <p>{{ subMenu.label }}</p>
+                            </li>
+                        }
                     }
-                </ul>
+                </p-accordion>
             }
         }
         <li class="px-4 py-3 list-none hover:bg-gray-100 flex flex-row gap-2 w-full hover:rounded-md cursor-pointer">

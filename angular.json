@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "project-template": {
+    "calton-datx": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/project-template",
+            "aot": true,
+            "allowedCommonJsDependencies": [ "*" ],
+            "outputPath": "dist/calton-datx",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -70,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "project-template:build:production"
+              "buildTarget": "calton-datx:build:production"
             },
             "development": {
-              "buildTarget": "project-template:build:development"
+              "buildTarget": "calton-datx:build:development"
             }
           },
           "defaultConfiguration": "development"

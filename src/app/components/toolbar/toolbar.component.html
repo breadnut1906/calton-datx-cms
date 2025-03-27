@@ -1,12 +1,12 @@
 <div class="toolbar-container justify-between h-20">
-    <a class="mx-3" href="/">
+    <a href="/">
         <img src="assets/company.png" [width]="100" alt="app logo">
     </a>
     <div class="flex flex-row items-center cursor-pointer text-white">
-        <p-avatar label="N" shape="circle" size="large"></p-avatar>
+        <p-avatar [image]="publicURL + '/profile/' + info()?.profileImage" (onImageError)="'assets/user.png'" shape="circle" size="large"></p-avatar>
         <div class="flex flex-col ms-1 md:ms-3 ps-1 hidden sm:block">
-            <h6 class="font-bold !select-none">Nyxsys PH</h6>
-            <p class="text-sm !select-none">Administrator</p>
+            <h6 class="font-bold !select-none">{{ info()?.firstName }}</h6>
+            <p class="text-sm !select-none">{{ info()?.role.name }}</p>
         </div>
     </div>
 </div>

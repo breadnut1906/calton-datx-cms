@@ -4,21 +4,25 @@ import { Router } from '@angular/router';
 import { PrimengUiModule } from '../../core/modules/primeng-ui/primeng-ui.module';
 import { UtilsService } from '../../core/services/utils.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { AuthService } from '../../core/services/auth.service';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-sidebar',
   imports: [ PrimengUiModule ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  providers: [ MessageService, ConfirmationService ]
 })
 export class SidebarComponent {
 
   router = inject(Router);
   utils = inject(UtilsService);
+  user = inject(UserService);
   
   confirmation = inject(ConfirmationService);
   menuItems = signal<DrawerMenu[]>([]);
+
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {    
     this.menuItems.set([
@@ -28,25 +32,76 @@ export class SidebarComponent {
         routerLink: '/dashboard'
       },
       {
+        label: 'Sites',
+        icon: 'pi pi-map-marker',
+        routerLink: '/sites'
+      },
+      {
+        label: 'Account',
+        icon: 'pi pi-user',
+        items: [
+          {
+            label: 'My Profile',
+            icon: 'pi pi-user',
+            routerLink: ['/profile'],
+          },
+          {
+            label: 'Users',
+            icon: 'pi pi-users',
+            routerLink: ['/users'],
+          },
+          {
+            label: 'Security',
+            icon: 'pi pi-key',
+            routerLink: ['/security'],
+          },
+        ]
+      },
+      {
         label: 'Settings',
         icon: 'pi pi-cog',
         expanded: false,
         items: [
           {
-            label: 'Profile',
-            icon: 'pi pi-user',
-            routerLink: ['/settings/profile'],
+            label: 'System Settings',
+            items: [
+              {
+                label: 'Vehicle Multiplier',
+                icon: 'pi pi-car',
+                routerLink: ['/settings/vehicle-multiplier'],
+              },
+              {
+                label: 'Groups',
+                icon: 'pi pi-users',
+                routerLink: ['/settings/groups'],
+              },
+              {
+                label: 'Roles',
+                icon: 'pi pi-shield',
+                routerLink: ['/settings/roles'],
+              },
+            ]
           },
           {
-            label: 'Users',
-            icon: 'pi pi-users',
-            routerLink: ['/settings/user-management'],
+            label: 'Campaign Settings',
+            items: [
+              {
+                label: 'Companies',
+                icon: 'pi pi-building',
+                routerLink: ['/settings/companies'],
+              },
+              {
+                label: 'Brands',
+                icon: 'pi pi-tag',
+                routerLink: ['/settings/brands'],
+              },
+              {
+                label: 'Campaigns',
+                icon: 'pi pi-megaphone',
+                routerLink: ['/settings/campaigns'],
+              }
+            ]
           },
-          {
-            label: 'Roles',
-            icon: 'pi pi-lock',
-            routerLink: ['/settings/role-management'],
-          }
         ]
       }
     ])
@@ -75,14 +130,15 @@ export class SidebarComponent {
         outlined: true,
       },
       accept: () => {
-        // this.auth.onLogout();
+        this.auth.onLogout();
+        this.router.navigate(['/login']);
       },
     })
   }
 
   onClickGotoPage(subMenu: any) {
-    const router = Array.isArray(subMenu.routerLink) ? subMenu.routerLink : [ subMenu.routerLink ] //isArray(subMenu.routerLink)
+    const router = Array.isArray(subMenu.routerLink) ? subMenu.routerLink : [ subMenu.routerLink ]
     this.router.navigate(router);    
-    // if (this.utils.drawerVisible()) this.utils.drawerVisible.set(!this.utils.drawerVisible());
+    if (this.utils.drawerVisible()) this.utils.drawerVisible.set(!this.utils.drawerVisible());
   }
 }
