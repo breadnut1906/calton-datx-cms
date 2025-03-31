@@ -21,7 +21,7 @@ export class UserAccountsComponent {
   /** Variables */
   isEdit = signal<boolean>(false);
   isLoading = signal<boolean>(false);
-  columns: string[] = [ 'Name', 'Role', 'Created On', 'Status', 'Actions' ];
+  columns: string[] = [ 'Name', 'Role', 'Created On', 'Status' ];
   pageInfo: MenuItem = [ {label: 'Settings'}, {label: 'User Accounts'} ];
   userOptions: any[] = [
     {

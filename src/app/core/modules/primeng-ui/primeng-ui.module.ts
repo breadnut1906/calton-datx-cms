@@ -43,6 +43,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { FluidModule } from 'primeng/fluid';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { PaginatorModule } from 'primeng/paginator';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -96,6 +97,7 @@ const PRIMENGMODULES = [
   DividerModule,
   SplitButtonModule,
   PaginatorModule,
+  MultiSelectModule,
 ];
 
 @NgModule({

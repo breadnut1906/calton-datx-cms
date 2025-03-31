@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { PrimengUiModule } from '../../../core/modules/primeng-ui/primeng-ui.module';
 import { UserService } from '../../../core/services/user.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -11,7 +11,8 @@ import { SettingsApiService } from '../../../core/services/settings-api.service'
   selector: 'app-user-account-edit',
   imports: [ PrimengUiModule, RouterLink ],
   templateUrl: './user-account-edit.component.html',
-  styleUrl: './user-account-edit.component.scss'
+  styleUrl: './user-account-edit.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserAccountEditComponent {
 
@@ -22,6 +23,8 @@ export class UserAccountEditComponent {
   activatedRoute = inject(ActivatedRoute);
   
   /** Variables */
+  roles: any[] = [];
+  groups: any[] = [];
   countries: any[] = [];
   isEdit = signal<boolean>(false);
   isLoading = signal<boolean>(false);
@@ -33,8 +36,8 @@ export class UserAccountEditComponent {
     username: new FormControl('', [ Validators.required ]),
     email: new FormControl('', [ Validators.required ]),
     groupIds: new FormControl([], { nonNullable: true }),
-    roleId: new FormControl(0, [ Validators.required ]),
-    country: new FormControl('', [ Validators.required ]),
+    roleId: new FormControl(null, [ Validators.required ]),
+    country: new FormControl(null, [ Validators.required ]),
     companyIds: new FormControl([], { nonNullable: true }),
     brandIds: new FormControl([], { nonNullable: true }),
     campaignIds: new FormControl([], { nonNullable: true }),
@@ -49,6 +52,8 @@ export class UserAccountEditComponent {
       }
     });
     this.onLoadCountries();
+    this.onLoadGroups();
+    this.onLoadRoles();
   }
 
   onLoadUserInfo(id: number) {
@@ -81,5 +86,23 @@ export class UserAccountEditComponent {
       next: (data: any) => this.countries = data,
       error: (error) => console.error(error)
     })
+  }
+
+  onLoadRoles() {
+    this.settingAPI.getAllRoles().subscribe({
+      next: (data: any) => this.roles = data.items,
+      error: (error) => console.error(error)
+    })
+  }
+
+  onLoadGroups() {
+    this.settingAPI.getAllGroups().subscribe({
+      next: (data: any) => this.groups = data.items,
+      error: (error) => console.error(error)
+    })
+  }
+
+  onSave() {
+    console.log(this.userForm.value);    
   }
 }
