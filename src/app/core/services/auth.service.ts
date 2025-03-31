@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   onLogin() {
-    const { remember, ...data } = this.loginForm.value;
+    const { rememberMe, ...data } = this.loginForm.value;
     if (this.loginForm.invalid) {
       this.message.add({ summary: 'Login Error', detail: 'Please input required fields (*)', icon: 'pi pi-info-circle', severity: 'error' });
       return;
@@ -42,9 +42,9 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/auth/login`, data).pipe(
       map((response: any) => {
         if (response) {          
-          this.storage.setToken('token', response.accessToken, remember);
-          this.storage.setToken('refreshToken', response.refreshToken, remember);
-          this.storage.setToken('remember', remember, remember);
+          this.storage.setToken('token', response.accessToken, rememberMe);
+          this.storage.setToken('refreshToken', response.refreshToken, rememberMe);
+          this.storage.setToken('remember', rememberMe, rememberMe);
           this.isAuthenticated.next(true);
           this.loginForm.reset();
         }

@@ -1,0 +1,97 @@
+<app-breadcrumbs [menu]="pageInfo"></app-breadcrumbs>
+
+<p-card>
+    <div class="flex justify-between items-center mb-8">
+        <app-filters />
+        <div class="flex gap-3">
+            <p-button pTooltip="Refresh" tooltipPosition="bottom" icon="pi pi-refresh" (click)="onLoad()" text></p-button>
+            <p-button pTooltip="New" tooltipPosition="bottom" icon="pi pi-plus" (click)="onNew()" text></p-button>
+            <!-- <p-button pTooltip="Export" tooltipPosition="bottom" icon="pi pi-file-export" (click)="dt.exportCSV()"></p-button> -->
+        </div>
+    </div>
+    @if (isLoading()) { <p-progressbar mode="indeterminate" [style]="{ height: '6px' }" /> }
+    <p-table 
+        #dt
+        class="hidden lg:block"
+        [value]="datasource" 
+        [lazy]="true" 
+        [rows]="10" 
+        (onPage)="onPageChange($event)" 
+        [totalRecords]="pagination.totalItems" 
+        [paginator]="true" 
+        [rowsPerPageOptions]="[10, 20, 50, 100]"
+    >
+        <ng-template #header>
+            <tr>
+                @for (column of columns; track $index) {
+                    <th>{{ column }}</th>
+                }
+            </tr>
+        </ng-template>
+        <ng-template #body let-item>
+            <tr>
+                <td>
+                    <div class="flex flex-col">
+                        <h6 class="font-semibold">{{ item.firstName }} {{ item.lastName }}</h6>
+                        <p class="text-sm italic">{{ item.email }}</p>
+                    </div>
+                </td>
+                <td>
+                    <p-tag [value]="item.role.name" severity="secondary" />
+                </td>
+                <td><p class="text-sm">{{ item.createdAt | date: 'MMM dd, yyyy hh:mm a'}}</p></td>
+                <td>
+                    @switch (item.status) {
+                        @case('Activated') { <p-tag [value]="item.status" severity="success" /> }
+                        @case('Deactivated') { <p-tag [value]="item.status" severity="danger" /> }
+                        @default { <p-tag [value]="item.status" severity="warn" /> }
+                    }
+                </td>
+                <td>
+                    <p-splitbutton size="small" icon="pi pi-pencil" label="Edit" [appendTo]="'body'" (onClick)="onEdit(item.id)" [model]="userOptions" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="block lg:hidden grid grid-cols-1 gap-5">
+        @for (item of datasource; track $index) {
+            <div #card class="p-[1rem] border border-gray-200 rounded-lg">
+                <div class="flex gap-2 justify-between items-center w-full">
+                    <div class="flex flex-col">
+                        <h6 class="font-semibold">{{ item.firstName }} {{ item.lastName }}</h6>
+                        <p class="text-sm italic">{{ item.email }}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <p-button icon="pi pi-pencil" text />
+                        <div>
+                            <p-button (click)="menu.toggle($event)" icon="pi pi-cog" text />
+                            <p-menu #menu [model]="userOptions" [popup]="true" />
+                        </div>
+                    </div>
+                </div>
+                <p-divider />
+                <div class="grid grid-cols-1 mt-5 gap-5">
+                    <div class="flex justify-between">
+                        <p class="font-medium">Role</p>
+                        <p-tag [value]="item.role.name" severity="secondary" />
+                    </div>
+                    <div class="flex justify-between">
+                        <p class="font-medium">Created On:</p>
+                        <p class="text-sm">{{ item.createdAt | date: 'MMM dd, yyyy hh:mm a'}}</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p class="font-medium">Status:</p>
+                        <p class="text-sm">
+                            @switch (item.status) {
+                                @case('Activated') { <p-tag [value]="item.status" severity="success" /> }
+                                @case('Deactivated') { <p-tag [value]="item.status" severity="danger" /> }
+                                @default { <p-tag [value]="item.status" severity="warn" /> }
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+        <p-paginator (onPageChange)="onPageChange($event)" [rows]="10" [totalRecords]="pagination.totalItems" [rowsPerPageOptions]="[10, 20, 50, 100]" />
+    </div>
+</p-card>

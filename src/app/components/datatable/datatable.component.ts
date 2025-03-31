@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PrimengUiModule } from '../../core/modules/primeng-ui/primeng-ui.module';
+import { Columns } from '../../core/interfaces/datatable';
 
 @Component({
   selector: 'app-datatable',
@@ -9,8 +10,8 @@ import { PrimengUiModule } from '../../core/modules/primeng-ui/primeng-ui.module
 })
 export class DatatableComponent {
 
-  @Input() columns: string[] = [];
+  @Input() columns: Columns[] = [];
   @Input() datasource: any[] = [];
-  @Input() paginator: boolean = true;
+  @Input() paginator: boolean = false;
   @Input() actionTempRef: any;
 }

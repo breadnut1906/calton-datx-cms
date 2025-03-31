@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ComponentsModule } from '../core/modules/components/components.module';
 import { UtilsService } from '../core/services/utils.service';
@@ -19,10 +19,14 @@ export class MainComponent {
   user = inject(UserService);
 
   constructor() {
+    effect(() => {
+      const user = this.user.user();
+      if (user) console.log(this.user.user());
+    })
     this.socket.onConnectionInit();
   }
 
   ngOnInit() {
-    this.user.onGetCurrentUser();
+    this.user.onGetCurrentUser();    
   }
 }

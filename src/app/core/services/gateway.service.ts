@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import { environment } from '../../../environments/environment.development';
 
@@ -10,6 +10,8 @@ export class GatewayService {
   public socketClient!: Socket;
   serverUrl = environment.url;
 
+  networkStatus = signal<boolean>(false)
+
   constructor() {
     this.socketClient = io(this.serverUrl, {
       transports: ['websocket'],
@@ -18,7 +20,8 @@ export class GatewayService {
   
   /**Check server connection */
   onConnectionInit() {
-    this.socketClient.on('connect', () => {      
+    this.socketClient.on('connect', () => {
+      this.networkStatus.set(true);   
       console.log({
         id: this.socketClient.id,
         message: 'The system is connected to the server'
@@ -26,6 +29,7 @@ export class GatewayService {
     })
 
     this.socketClient.on('connect_error', (err) => {
+      this.networkStatus.set(false);
       console.log('The system is not connected to the server')
     })
 

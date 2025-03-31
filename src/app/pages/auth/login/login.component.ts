@@ -21,8 +21,7 @@ export class LoginComponent {
   onLogin() {
     this.isLoading.set(true);
     this.auth.onLogin()?.subscribe({
-      next: (response) => {    
-        console.log(response);
+      next: (response) => {
         this.router.navigate(['/dashboard']);
         this.isLoading.set(false);
       },

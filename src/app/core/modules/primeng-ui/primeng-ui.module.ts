@@ -39,6 +39,10 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { DividerModule } from 'primeng/divider';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { PanelModule } from 'primeng/panel';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { FluidModule } from 'primeng/fluid';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { PaginatorModule } from 'primeng/paginator';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -85,9 +89,13 @@ const PRIMENGMODULES = [
   CheckboxModule,
   ProgressBarModule,
   PanelModule,
+  InputNumberModule,
+  FluidModule,
   // NgxEchartsModule,
   SelectButtonModule,
   DividerModule,
+  SplitButtonModule,
+  PaginatorModule,
 ];
 
 @NgModule({

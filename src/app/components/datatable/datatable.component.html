@@ -1,19 +1,20 @@
-<p-table [value]="datasource">
+<p-table [columns]="columns" [value]="datasource">
     <ng-template #header let-columns>
         <tr>
             @for (column of columns; track $index) {
                 <th>{{ column.header }}</th>
             }
+            <th>Actions</th>
         </tr>
     </ng-template>
     <ng-template #body let-rowData let-columns="columns">
-        @for (row of datasource; track $index) {
-            <tr>
-                @for (col of columns; track $index) {
-                    <td>{{ row[col.field] }}</td>
-                }
+        <tr>
+            @for (col of columns; track $index) {
+                <td>{{ rowData[col.field] }}</td>
+            }
+            <td>
                 <ng-container *ngTemplateOutlet="actionTempRef; context: { $implicit: rowData }"></ng-container>
-            </tr>
-        }
+            </td>
+        </tr>
     </ng-template>
 </p-table>

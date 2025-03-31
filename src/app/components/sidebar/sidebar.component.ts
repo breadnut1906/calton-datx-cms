@@ -41,19 +41,24 @@ export class SidebarComponent {
         icon: 'pi pi-user',
         items: [
           {
-            label: 'My Profile',
-            icon: 'pi pi-user',
-            routerLink: ['/profile'],
-          },
-          {
-            label: 'Users',
-            icon: 'pi pi-users',
-            routerLink: ['/users'],
-          },
-          {
-            label: 'Security',
-            icon: 'pi pi-key',
-            routerLink: ['/security'],
+            label: 'Account Settings',
+            items: [
+              {
+                label: 'My Profile',
+                icon: 'pi pi-user',
+                routerLink: ['/accounts/profile'],
+              },
+              {
+                label: 'Users',
+                icon: 'pi pi-users',
+                routerLink: ['/accounts/users'],
+              },
+              {
+                label: 'Security',
+                icon: 'pi pi-key',
+                routerLink: ['/security'],
+              },
+            ]
           },
         ]
       },
