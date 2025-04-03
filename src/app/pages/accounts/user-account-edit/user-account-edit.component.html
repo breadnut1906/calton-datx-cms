@@ -1,46 +1,50 @@
-<div class="flex justify-between p-[14px]">
+<div class="flex justify-between py-[14px]">
     <p-button label="Back" icon="pi pi-arrow-left" [routerLink]="['/accounts/users']" (click)="userForm.reset()" text />
     <p-button label="Save" icon="pi pi-save" (onClick)="onSave()" />
 </div>
 
-<div class="flex flex-col gap-3">
+<div class="flex flex-col gap-5">
     <p-card>
-        <ng-template #title>Personal Information</ng-template>
-        <form class="grid grid-cols-1 md:grid-cols-2 gap-3" [formGroup]="userForm">
-            <p-floatlabel variant="in">
-                <input id="firstName" pInputText formControlName="firstName" fluid />
-                <label for="firstName">First Name</label>
-            </p-floatlabel>
-            <p-floatlabel variant="in">
-                <input id="lastName" pInputText formControlName="lastName" fluid />
-                <label for="lastName">Last Name</label>
-            </p-floatlabel>
-            <p-floatlabel variant="in">
-                <input id="email" pInputText formControlName="email" type="email" fluid />
-                <label for="email">Email</label>
-            </p-floatlabel>
-            <p-floatlabel variant="in">
-                <p-select formControlName="country" inputId="country" [loading]="countries.length == 0" [options]="countries" appendTo="body" optionLabel="name" optionValue="name" filter fluid />
-                <label for="country">Country</label>
-            </p-floatlabel>
-        </form>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+            <h5 class="font-semibold text-lg col-span-2">Personal Information</h5>
+            <form class="grid grid-cols-1 col-span-10 gap-5" [formGroup]="userForm">
+                <p-floatlabel variant="in">
+                    <input id="firstName" pInputText formControlName="firstName" fluid />
+                    <label for="firstName">First Name</label>
+                </p-floatlabel>
+                <p-floatlabel variant="in">
+                    <input id="lastName" pInputText formControlName="lastName" fluid />
+                    <label for="lastName">Last Name</label>
+                </p-floatlabel>
+                <p-floatlabel variant="in">
+                    <input id="email" pInputText formControlName="email" type="email" fluid />
+                    <label for="email">Email</label>
+                </p-floatlabel>
+                <p-floatlabel variant="in">
+                    <p-select formControlName="country" inputId="country" [loading]="countries.length == 0" [options]="countries" appendTo="body" optionLabel="name" optionValue="name" filter fluid />
+                    <label for="country">Country</label>
+                </p-floatlabel>
+            </form>
+        </div>
     </p-card>
     
     <p-card>
-        <ng-template #title>Account Information</ng-template>
-        <form class="grid grid-cols-1 md:grid-cols-3 gap-3" [formGroup]="userForm">
-            <p-floatlabel variant="in">
-                <input id="username" pInputText formControlName="username" fluid />
-                <label for="username">Username</label>
-            </p-floatlabel>
-            <p-floatlabel variant="in">
-                <p-select formControlName="roleId" inputId="roleId" [loading]="roles.length == 0" [options]="roles" appendTo="body" optionLabel="name" optionValue="id" fluid />
-                <label for="roleId">Role</label>
-            </p-floatlabel>
-            <p-floatlabel variant="in">
-                <p-multiselect [options]="groups" size="small" [loading]="groups.length == 0" formControlName="groupIds" optionLabel="name" optionValue="id" [maxSelectedLabels]="3" filter fluid />
-                <label for="groupIds">Groups</label>
-            </p-floatlabel>
-        </form>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+            <h5 class="font-semibold text-lg col-span-2">Account Information</h5>
+            <form class="grid grid-cols-1 col-span-10 gap-5" [formGroup]="userForm">
+                <p-floatlabel variant="in">
+                    <input id="username" pInputText formControlName="username" fluid />
+                    <label for="username">Username</label>
+                </p-floatlabel>
+                <p-floatlabel variant="in">
+                    <p-select formControlName="roleId" inputId="roleId" [loading]="roles.length == 0" [options]="roles" appendTo="body" optionLabel="name" optionValue="id" fluid />
+                    <label for="roleId">Role</label>
+                </p-floatlabel>
+                <p-floatlabel variant="in">
+                    <p-multiselect [options]="groups" size="small" [loading]="groups.length == 0" formControlName="groupIds" optionLabel="name" optionValue="id" [maxSelectedLabels]="3" filter fluid />
+                    <label for="groupIds">Groups</label>
+                </p-floatlabel>
+            </form>
+        </div>
     </p-card>
 </div>

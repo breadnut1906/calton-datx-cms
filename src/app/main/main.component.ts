@@ -19,10 +19,10 @@ export class MainComponent {
   user = inject(UserService);
 
   constructor() {
-    effect(() => {
-      const user = this.user.user();
-      if (user) console.log(this.user.user());
-    })
+    // effect(() => {
+    //   const user = this.user.user();
+    //   if (user) console.log(this.user.user());
+    // })
     this.socket.onConnectionInit();
   }
 

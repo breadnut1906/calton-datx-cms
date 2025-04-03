@@ -5,6 +5,7 @@ import { ToolbarComponent } from '../../../components/toolbar/toolbar.component'
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { DatatableComponent } from '../../../components/datatable/datatable.component';
 import { FiltersComponent } from '../../../components/filters/filters.component';
+import { DashboardFiltersComponent } from '../../../components/dashboard-components/dashboard-filters/dashboard-filters.component';
 
 const COMPONENT_MODULES = [
   CommonModule,
@@ -13,6 +14,7 @@ const COMPONENT_MODULES = [
   BreadcrumbsComponent,
   DatatableComponent,
   FiltersComponent,
+  DashboardFiltersComponent,
 ]
 
 @NgModule({
